@@ -1,4 +1,4 @@
-module github.com/Click-CI/common
+module github.com/soderasen-au/go-common
 
 go 1.20
 

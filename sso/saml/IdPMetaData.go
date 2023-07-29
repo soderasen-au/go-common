@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Click-CI/common/util"
 	"github.com/russellhaering/gosaml2/types"
 	dsig "github.com/russellhaering/goxmldsig"
+	"github.com/soderasen-au/go-common/util"
 )
 
 type IdpMetaDataType int

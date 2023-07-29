@@ -5,9 +5,9 @@ import (
 	"crypto/tls"
 	"net/http"
 
-	"github.com/Click-CI/common/crypto"
-	"github.com/Click-CI/common/util"
 	"github.com/dghubble/oauth1"
+	"github.com/soderasen-au/go-common/crypto"
+	"github.com/soderasen-au/go-common/util"
 	"golang.org/x/oauth2"
 )
 

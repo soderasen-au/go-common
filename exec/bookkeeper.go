@@ -1,8 +1,8 @@
 package exec
 
 import (
-	"github.com/Click-CI/common/loggers"
-	"github.com/Click-CI/common/util"
+	"github.com/soderasen-au/go-common/loggers"
+	"github.com/soderasen-au/go-common/util"
 )
 
 type RequestKeeper interface {

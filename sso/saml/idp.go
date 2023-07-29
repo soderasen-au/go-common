@@ -4,12 +4,12 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"github.com/Click-CI/common/loggers"
+	"github.com/soderasen-au/go-common/loggers"
 	"os"
 
-	"github.com/Click-CI/common/util"
 	saml2 "github.com/russellhaering/gosaml2"
 	dsig "github.com/russellhaering/goxmldsig"
+	"github.com/soderasen-au/go-common/util"
 )
 
 // for manual config of SAML

@@ -1,6 +1,6 @@
 package saml
 
-import "github.com/Click-CI/common/util"
+import "github.com/soderasen-au/go-common/util"
 
 type Config struct {
 	Idp *IdpConfig `json:"idp,omitempty" yaml:"idp,omitempty" bson:"idp,omitempty"`

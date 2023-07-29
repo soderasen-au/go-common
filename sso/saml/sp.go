@@ -1,9 +1,9 @@
 package saml
 
 import (
-	"github.com/Click-CI/common/crypto"
-	"github.com/Click-CI/common/util"
 	dsig "github.com/russellhaering/goxmldsig"
+	"github.com/soderasen-au/go-common/crypto"
+	"github.com/soderasen-au/go-common/util"
 )
 
 type ACSBindingType int

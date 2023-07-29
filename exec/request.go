@@ -1,8 +1,8 @@
 package exec
 
 import (
-	"github.com/Click-CI/common/util"
 	"github.com/rs/zerolog"
+	"github.com/soderasen-au/go-common/util"
 )
 
 const (

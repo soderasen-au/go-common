@@ -8,7 +8,7 @@ import (
 	"io/fs"
 	"io/ioutil"
 
-	"github.com/Click-CI/common/util"
+	"github.com/soderasen-au/go-common/util"
 )
 
 func InternalEncypt(text []byte) ([]byte, error) {

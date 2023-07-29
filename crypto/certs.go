@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/Click-CI/common/util"
+	"github.com/soderasen-au/go-common/util"
 )
 
 const (
