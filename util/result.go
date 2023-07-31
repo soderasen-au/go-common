@@ -150,3 +150,13 @@ func JsonStr(r interface{}) string {
 	}
 	return string(res)
 }
+
+func SameResult(lh, rh *Result) bool {
+	if lh == rh {
+		return true
+	}
+	if lh != nil && rh != nil {
+		return lh.Code == rh.Code && lh.Ctx == rh.Ctx && lh.Msg == rh.Msg && lh.Result == rh.Result
+	}
+	return false
+}
