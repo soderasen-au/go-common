@@ -5,11 +5,13 @@ import (
 	"github.com/soderasen-au/go-common/util"
 )
 
+type Status string
+
 const (
-	REQUEST_STATUS_READY   string = "Ready"
-	REQUEST_STATUS_FAILED  string = "Failed"
-	REQUEST_STATUS_OK      string = "Succeeded"
-	REQUEST_STATUS_RUNNING string = "Running"
+	StatusReady   Status = "ready"
+	StatusFailed  Status = "failed"
+	StatusOk      Status = "succeeded"
+	StautsRunning Status = "running"
 )
 
 type Request interface {
@@ -19,16 +21,22 @@ type Request interface {
 	Run() (bool, []*util.Result)
 }
 
-type RequestMeta struct {
-	RequestID string         `json:"request_id,omitempty" yaml:"request_id,omitempty" bson:"request_id,omitempty"`
-	FuncName  string         `json:"func_name,omitempty" yaml:"func_name,omitempty" bson:"func_name,omitempty"`
-	Results   []*util.Result `json:"results,omitempty" yaml:"result,omitempty" bson:"results,omitempty"`
-	Status    string         `json:"status,omitempty" yaml:"status,omitempty" bson:"status,omitempty"`
+type Meta interface {
+	ID() string
+	Name() string
+	GetResults() []*util.Result
+	SetResults(r []*util.Result)
+	GetStatus() Status
+	SetStatus(s Status)
 }
 
-func (meta *RequestMeta) Reset(req Request) {
-	meta.RequestID = req.ID()
-	meta.FuncName = req.Name()
-	meta.Results = nil
-	meta.Status = REQUEST_STATUS_READY
+type MetaKeeper interface {
+	Get(reqId string) (Meta, bool)
+	Set(req Meta)
+}
+
+type RequestKeeper interface {
+	Register(req Request) (*RequestMeta, *util.Result)
+	GetMeta(id string) (Meta, bool)
+	AsyncRun(req Request)
 }
