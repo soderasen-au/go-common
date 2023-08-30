@@ -39,7 +39,7 @@ type GreatorExp struct {
 }
 
 func (e GreatorExp) Calc() *Value {
-	return e.Rh.Calc().Less(e.Rh.Calc())
+	return e.Rh.Calc().Less(e.Lh.Calc())
 }
 
 func NewGreatorExp(lh, rh *Value) Expression {
