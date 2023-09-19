@@ -3,10 +3,11 @@ package util
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/rs/zerolog"
 	"path/filepath"
 	"runtime"
 	"time"
+
+	"github.com/rs/zerolog"
 )
 
 func FuncName(skip int) string {
@@ -68,6 +69,16 @@ func Error(ctx string, err error) *Result {
 }
 
 func MsgError(ctx string, msg string) *Result {
+	return &Result{
+		Code:      -1,
+		Msg:       msg,
+		Ctx:       ctx,
+		Timestamp: time.Now(),
+	}
+}
+
+func LogMsgError(logger *zerolog.Logger, ctx string, msg string) *Result {
+	logger.Error().Msgf("%s: %s", ctx, msg)
 	return &Result{
 		Code:      -1,
 		Msg:       msg,
