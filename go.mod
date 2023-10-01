@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/dghubble/oauth1 v0.7.2
+	github.com/rogpeppe/go-internal v1.11.0
 	github.com/rs/zerolog v1.29.1
 	github.com/russellhaering/gosaml2 v0.9.1
 	github.com/russellhaering/goxmldsig v1.4.0
