@@ -1,6 +1,7 @@
 package fx
 
 import (
+	"fmt"
 	"github.com/soderasen-au/go-common/util"
 	"strconv"
 )
@@ -141,6 +142,15 @@ func (lh *Value) Not() *Value {
 		return Error(util.MsgError("Or", "lh is not bool"))
 	}
 	return Bool(lh.False())
+}
+
+func (v *Value) String() string {
+	if v.IsNil() {
+		return "<nil>"
+	} else if v.IsNumeric {
+		return fmt.Sprintf("%f", *v.Number)
+	}
+	return util.MaybeNil(v.Text)
 }
 
 func False() *Value {
