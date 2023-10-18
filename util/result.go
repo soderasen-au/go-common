@@ -68,6 +68,13 @@ func Error(ctx string, err error) *Result {
 	}
 }
 
+func LogError(l *zerolog.Logger, ctx string, err error) *Result {
+	if l != nil {
+		l.Err(err).Msg(ctx)
+	}
+	return Error(ctx, err)
+}
+
 func MsgError(ctx string, msg string) *Result {
 	return &Result{
 		Code:      -1,
