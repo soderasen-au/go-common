@@ -2,6 +2,7 @@ package util
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/rogpeppe/go-internal/diff"
 	"reflect"
 )
@@ -10,6 +11,7 @@ const (
 	DiffAdd string = "add"
 	DiffDel string = "delete"
 	DiffMod string = "modify"
+	DiffEq  string = "eq"
 )
 
 type DiffMarshaler interface {
@@ -17,11 +19,16 @@ type DiffMarshaler interface {
 }
 
 type Diff struct {
-	From []byte
-	To   []byte
-	Type string
-	Path string
-	Diff []byte
+	From []byte `json:"-" yaml:"-"`
+	To   []byte `json:"-" yaml:"-"`
+	Type string `json:"type" yaml:"type"`
+	Path string `json:"path" yaml:"path"`
+	Diff string `json:"diff" yaml:"diff"`
+}
+
+func (d *Diff) String() string {
+	return fmt.Sprintf("---------- START %s Path [%s] -------------\n%s----------  END  %s Path [%s] -------------",
+		d.Type, d.Path, d.Diff, d.Type, d.Path)
 }
 
 func NewDiff(path string, from, to DiffMarshaler) (*Diff, *Result) {
@@ -53,7 +60,7 @@ func NewDiff(path string, from, to DiffMarshaler) (*Diff, *Result) {
 		toBuf = append(toBuf, '\n')
 	}
 
-	diffBuf := diff.Diff("from", fromBuf, "to", toBuf)
+	diffBuf := diff.Diff("left", fromBuf, "right", toBuf)
 	if len(diffBuf) == 0 {
 		return nil, nil
 	}
@@ -62,7 +69,7 @@ func NewDiff(path string, from, to DiffMarshaler) (*Diff, *Result) {
 		From: fromBuf,
 		To:   toBuf,
 		Path: path,
-		Diff: diffBuf,
+		Diff: string(diffBuf),
 	}
 	if from == nil && to != nil {
 		d.Type = DiffAdd
@@ -90,13 +97,17 @@ func NewJsonDiff[T any](path string, from, to *T) (*Diff, *Result) {
 		return nil, Error("MarshalTo", err)
 	}
 	toBuf = append(toBuf, '\n')
-	diffBuf := diff.Diff("from", fromBuf, "to", toBuf)
+	diffBuf := diff.Diff("left", fromBuf, "right", toBuf)
+
+	if diffBuf == nil || len(diffBuf) == 0 {
+		return nil, nil
+	}
 
 	d := Diff{
 		From: fromBuf,
 		To:   toBuf,
 		Path: path,
-		Diff: diffBuf,
+		Diff: string(diffBuf),
 	}
 	if from == nil {
 		d.Type = DiffAdd
