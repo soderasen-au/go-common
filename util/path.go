@@ -1,9 +1,11 @@
 package util
 
 import (
+	"io"
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 )
 
 func Exists(path string) (bool, error) {
@@ -59,4 +61,50 @@ func ListFiles(folder string) ([]string, *Result) {
 
 func MaybeCreate(folder string) error {
 	return os.MkdirAll(folder, 0777)
+}
+
+func MoveFile(src, dst string) *Result {
+	if src == "" {
+		return MsgError("CheckSourcePath", "no source path to move")
+	}
+
+	//TODO: src is a folder?
+
+	if fs, err := os.Stat(dst); err != nil {
+		return Error("CheckTargetPath", err)
+	} else {
+		if fs.IsDir() {
+			_, fn := filepath.Split(src)
+			dst = filepath.Join(dst, fn)
+		}
+	}
+
+	dstFolder, _ := filepath.Split(dst)
+	if err := MaybeCreate(dstFolder); err != nil {
+		return Error("MaybeCreate: "+dstFolder, err)
+	}
+
+	inputFile, err := os.Open(src)
+	if err != nil {
+		return Error("Open: "+src, err)
+	}
+	outputFile, err := os.Create(dst)
+	if err != nil {
+		inputFile.Close()
+		return Error("Create: "+dst, err)
+	}
+	defer outputFile.Close()
+
+	_, err = io.Copy(outputFile, inputFile)
+	inputFile.Close()
+	if err != nil {
+		return Error("Copy "+src+" to "+dst, err)
+	}
+	// The copy was successful, so now delete the original file
+	err = os.Remove(src)
+	if err != nil {
+		return Error("Remove "+src, err)
+	}
+
+	return nil
 }
