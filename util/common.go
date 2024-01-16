@@ -1,6 +1,7 @@
 package util
 
 import (
+	"encoding/json"
 	"net/url"
 	"path"
 	"strings"
@@ -102,4 +103,19 @@ func Ptr[T any](v T) *T {
 func Int32to64(i *int32) *int64 {
 	var o int64 = int64(*i)
 	return &o
+}
+
+func StupidDeepCopy[T any](v *T) (*T, *Result) {
+	buf, err := json.Marshal(v)
+	if err != nil {
+		return nil, Error("Marshal", err)
+	}
+
+	var ret *T
+	err = json.Unmarshal(buf, ret)
+	if err != nil {
+		return nil, Error("Unmarshal", err)
+	}
+
+	return ret, nil
 }
