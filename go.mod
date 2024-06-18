@@ -1,6 +1,6 @@
 module github.com/soderasen-au/go-common
 
-go 1.20
+go 1.22
 
 require (
 	github.com/dghubble/oauth1 v0.7.2
