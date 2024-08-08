@@ -1,7 +1,9 @@
 package util
 
 import (
+	"fmt"
 	"io"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path"
@@ -56,6 +58,33 @@ func ListFiles(folder string) ([]string, *Result) {
 		}
 	}
 
+	return ret, nil
+}
+
+func FilterFiles(folder, pattern string) ([]string, *Result) {
+	ret := make([]string, 0)
+	err := filepath.WalkDir(folder, func(file string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return fmt.Errorf("can't parse file path %s: %s", file, err.Error())
+		}
+		if entry.Type().IsDir() {
+			return nil
+		}
+
+		if entry.Type().IsRegular() {
+			if matched, err := filepath.Match(pattern, filepath.Base(file)); err != nil {
+				return fmt.Errorf("can't match file path %s: %s", file, err.Error())
+			} else if matched {
+				ret = append(ret, file)
+			}
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return ret, Error("WalkDir", err)
+	}
 	return ret, nil
 }
 
