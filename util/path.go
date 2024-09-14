@@ -96,12 +96,8 @@ func MoveFile(src, dst string) *Result {
 		return MsgError("CheckSourcePath", "no source path to move")
 	}
 
-	//TODO: src is a folder?
-
-	if fs, err := os.Stat(dst); err != nil {
-		return Error("CheckTargetPath", err)
-	} else {
-		if fs.IsDir() {
+	if fileInfo, err := os.Stat(dst); err == nil {
+		if fileInfo.IsDir() {
 			_, fn := filepath.Split(src)
 			dst = filepath.Join(dst, fn)
 		}
