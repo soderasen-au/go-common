@@ -1,8 +1,9 @@
 package fx
 
 import (
-	"github.com/soderasen-au/go-common/util"
 	"strings"
+
+	"github.com/soderasen-au/go-common/util"
 )
 
 //IncludeOp Operator = "~="

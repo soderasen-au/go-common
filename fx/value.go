@@ -2,8 +2,9 @@ package fx
 
 import (
 	"fmt"
-	"github.com/soderasen-au/go-common/util"
 	"strconv"
+
+	"github.com/soderasen-au/go-common/util"
 )
 
 type (

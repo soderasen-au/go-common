@@ -1,8 +1,9 @@
 package exec
 
 import (
-	"github.com/soderasen-au/go-common/util"
 	"time"
+
+	"github.com/soderasen-au/go-common/util"
 )
 
 type (

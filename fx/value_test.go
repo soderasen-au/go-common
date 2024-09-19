@@ -1,8 +1,9 @@
 package fx
 
 import (
-	"github.com/soderasen-au/go-common/util"
 	"testing"
+
+	"github.com/soderasen-au/go-common/util"
 )
 
 func TestValue_Less(t *testing.T) {

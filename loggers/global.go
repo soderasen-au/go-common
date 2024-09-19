@@ -1,10 +1,11 @@
 package loggers
 
 import (
-	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 	"os"
 	"time"
+
+	"gopkg.in/natefinch/lumberjack.v2"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"

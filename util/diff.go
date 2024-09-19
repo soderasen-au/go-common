@@ -3,8 +3,9 @@ package util
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/rogpeppe/go-internal/diff"
 	"reflect"
+
+	"github.com/rogpeppe/go-internal/diff"
 )
 
 const (

@@ -7,10 +7,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/russellhaering/gosaml2/types"
 	dsig "github.com/russellhaering/goxmldsig"
+
 	"github.com/soderasen-au/go-common/util"
 )
 
@@ -79,7 +81,7 @@ func (meta *IdpMetaData) GetMetaData() (*types.EntityDescriptor, dsig.X509Certif
 			return nil, nil, util.MsgError("GetFileMetaData", "No filename")
 		}
 
-		meta.RawData, err = ioutil.ReadFile(*meta.File)
+		meta.RawData, err = os.ReadFile(*meta.File)
 		if err != nil {
 			return nil, nil, util.Error("ReadFileMetaData", err)
 		}

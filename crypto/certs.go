@@ -7,8 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/soderasen-au/go-common/util"
 	"software.sslmate.com/src/go-pkcs12"
+
+	"github.com/soderasen-au/go-common/util"
 )
 
 const (

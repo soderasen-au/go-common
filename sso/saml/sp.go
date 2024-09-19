@@ -2,6 +2,7 @@ package saml
 
 import (
 	dsig "github.com/russellhaering/goxmldsig"
+
 	"github.com/soderasen-au/go-common/crypto"
 	"github.com/soderasen-au/go-common/util"
 )

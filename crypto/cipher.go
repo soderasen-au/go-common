@@ -6,7 +6,7 @@ import (
 	"crypto/rsa"
 	"crypto/sha256"
 	"io/fs"
-	"io/ioutil"
+	"os"
 
 	"github.com/soderasen-au/go-common/util"
 )
@@ -52,7 +52,7 @@ func (c CipherFile) WriteToFile() *util.Result {
 		return util.Error("Encrypt", err)
 	}
 
-	err = ioutil.WriteFile(c.File, cipher, fs.ModePerm)
+	err = os.WriteFile(c.File, cipher, fs.ModePerm)
 	if err != nil {
 		return util.Error("WriteFile", err)
 	}
@@ -65,7 +65,7 @@ func (c *CipherFile) ReadFromFile() *util.Result {
 		return util.MsgError("Check", "empty file name")
 	}
 
-	pwbytes, err := ioutil.ReadFile(c.File)
+	pwbytes, err := os.ReadFile(c.File)
 	if err != nil {
 		return util.Error("ReadFile", err)
 	}

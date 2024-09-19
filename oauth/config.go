@@ -6,9 +6,10 @@ import (
 	"net/http"
 
 	"github.com/dghubble/oauth1"
+	"golang.org/x/oauth2"
+
 	"github.com/soderasen-au/go-common/crypto"
 	"github.com/soderasen-au/go-common/util"
-	"golang.org/x/oauth2"
 )
 
 type AuthMethod string

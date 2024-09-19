@@ -54,7 +54,7 @@ func TestNewItemDiff(t *testing.T) {
 			if diff != nil && diff.Type != tt.want {
 				t.Errorf("want type `%s` but got `%s`", tt.want, diff.Type)
 			} else {
-				fmt.Printf("diff: %s\n", string(diff.Diff))
+				fmt.Printf("diff: %s\n", diff.Diff)
 			}
 		})
 	}
@@ -68,6 +68,8 @@ func TestNewDiff(t *testing.T) {
 	r1 := MsgError("test", "res1")
 	r2 := MsgError("test", "res2")
 	r3 := MsgError("test", "res1")
+	r3.Timestamp = r1.Timestamp
+
 	var r4 *Result
 
 	type args struct {

@@ -4,11 +4,13 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"github.com/soderasen-au/go-common/loggers"
 	"os"
+
+	"github.com/soderasen-au/go-common/loggers"
 
 	saml2 "github.com/russellhaering/gosaml2"
 	dsig "github.com/russellhaering/goxmldsig"
+
 	"github.com/soderasen-au/go-common/util"
 )
 
