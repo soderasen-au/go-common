@@ -59,6 +59,11 @@ func TestRender(t *testing.T) {
 			expected: "30-Sep-2023",
 		},
 		{
+			name:     "Function replacement - today with custom format",
+			input:    "$today(January 02, 2006)",
+			expected: "October 01, 2023",
+		},
+		{
 			name:     "Variable replacement",
 			input:    "$(var1)",
 			expected: "value1",

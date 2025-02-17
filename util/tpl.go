@@ -65,7 +65,7 @@ func RenderTpl(input string) string {
 		// Case 2: Function replacement (e.g., `$func(param1, param2)`)
 		paramList := []string{}
 		if params != "" {
-			paramList = strings.Split(params, ",")
+			paramList = strings.Split(params, "|")
 			for i, param := range paramList {
 				paramList[i] = strings.TrimSpace(param) // Trim spaces
 			}
