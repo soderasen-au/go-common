@@ -111,14 +111,19 @@ func NewLogger(c Config) *zerolog.Logger {
 		writers = append(writers, DefaultConsoleWriter)
 	}
 	if c.EnableFileWriter {
-		writers = append(writers, &lumberjack.Logger{
+		var fileWriter io.Writer
+		fileWriter = &lumberjack.Logger{
 			Filename:   c.FileName,
 			MaxSize:    c.MaxSizeMB,
 			MaxAge:     c.MaxAgeDays,
 			MaxBackups: c.MaxBackups,
 			LocalTime:  c.UseLocalTime,
 			Compress:   c.Compress,
-		})
+		}
+		if c.SimpleFileWriter {
+			fileWriter = zerolog.ConsoleWriter{Out: fileWriter, TimeFormat: time.RFC3339}
+		}
+		writers = append(writers, fileWriter)
 	}
 	multi := zerolog.MultiLevelWriter(writers...)
 
