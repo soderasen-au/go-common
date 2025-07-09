@@ -121,7 +121,7 @@ func NewLogger(c Config) *zerolog.Logger {
 			Compress:   c.Compress,
 		}
 		if c.SimpleFileWriter {
-			fileWriter = zerolog.ConsoleWriter{Out: fileWriter, TimeFormat: time.RFC3339}
+			fileWriter = zerolog.ConsoleWriter{Out: fileWriter, TimeFormat: time.RFC3339, NoColor: true}
 		}
 		writers = append(writers, fileWriter)
 	}
