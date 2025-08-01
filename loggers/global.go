@@ -144,8 +144,7 @@ func NewCSVLogger(c Config, headers []string) *zerolog.Logger {
 		writers = append(writers, DefaultConsoleWriter)
 	}
 	if c.EnableFileWriter {
-		var fileWriter io.Writer
-		fileWriter = &lumberjack.Logger{
+		fileWriter := &lumberjack.Logger{
 			Filename:   c.FileName,
 			MaxSize:    c.MaxSizeMB,
 			MaxAge:     c.MaxAgeDays,
@@ -153,7 +152,7 @@ func NewCSVLogger(c Config, headers []string) *zerolog.Logger {
 			LocalTime:  c.UseLocalTime,
 			Compress:   c.Compress,
 		}
-		csvWriter := NewCSVWriter(fileWriter, c.SimpleFileDelimiter, headers)
+		csvWriter := NewCSVWriter(fileWriter, rune(c.SimpleFileDelimiter[0]), headers)
 		writers = append(writers, csvWriter)
 	}
 	multi := zerolog.MultiLevelWriter(writers...)

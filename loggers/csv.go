@@ -26,8 +26,8 @@ func NewCSVWriter(w io.Writer, delimiter rune, headers []string) *CSVWriter {
 	}
 
 	// Write headers
-	cw.writer.Write(headers)
-	cw.writer.Flush()
+	// cw.writer.Write(headers)
+	// cw.writer.Flush()
 
 	return cw
 }
