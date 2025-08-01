@@ -135,6 +135,37 @@ func NewLogger(c Config) *zerolog.Logger {
 	return &logger
 }
 
+func NewCSVLogger(c Config, headers []string) *zerolog.Logger {
+	writers := []io.Writer{&NullWriter{}}
+	if !c.EnableConsolColor {
+		DefaultConsoleWriter.NoColor = true
+	}
+	if c.EnableConsolWriter {
+		writers = append(writers, DefaultConsoleWriter)
+	}
+	if c.EnableFileWriter {
+		var fileWriter io.Writer
+		fileWriter = &lumberjack.Logger{
+			Filename:   c.FileName,
+			MaxSize:    c.MaxSizeMB,
+			MaxAge:     c.MaxAgeDays,
+			MaxBackups: c.MaxBackups,
+			LocalTime:  c.UseLocalTime,
+			Compress:   c.Compress,
+		}
+		csvWriter := NewCSVWriter(fileWriter, c.SimpleFileDelimiter, headers)
+		writers = append(writers, csvWriter)
+	}
+	multi := zerolog.MultiLevelWriter(writers...)
+
+	level, err := zerolog.ParseLevel(c.LogLevel)
+	if err != nil {
+		level = zerolog.InfoLevel
+	}
+	logger := zerolog.New(multi).Level(level).With().Timestamp().Logger()
+	return &logger
+}
+
 func NewGlobalLogger() *zerolog.Logger {
 	return NewLogger(*globalConfig)
 }
