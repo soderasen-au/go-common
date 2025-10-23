@@ -156,7 +156,7 @@ func (r Result) GetRootCause() *Result {
 func Jsonify(r interface{}) json.RawMessage {
 	res, err := json.MarshalIndent(r, "", "  ")
 	if err != nil {
-		fmt.Printf("can't generate response buff: " + err.Error())
+		fmt.Printf("can't generate response buff: %s\n", err.Error())
 	}
 	return res
 }
@@ -164,7 +164,7 @@ func Jsonify(r interface{}) json.RawMessage {
 func JsonStr(r interface{}) string {
 	res, err := json.MarshalIndent(r, "", "  ")
 	if err != nil {
-		fmt.Printf("can't generate response buff: " + err.Error())
+		fmt.Printf("can't generate response buff: %s\n", err.Error())
 	}
 	return string(res)
 }

@@ -111,11 +111,11 @@ func StupidDeepCopy[T any](v *T) (*T, *Result) {
 		return nil, Error("Marshal", err)
 	}
 
-	var ret *T
-	err = json.Unmarshal(buf, ret)
+	var ret T
+	err = json.Unmarshal(buf, &ret)
 	if err != nil {
 		return nil, Error("Unmarshal", err)
 	}
 
-	return ret, nil
+	return &ret, nil
 }

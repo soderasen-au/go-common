@@ -132,7 +132,7 @@ func (p Pfx) NewRsaKeyPair() (*RsaKeyPair, *util.Result) {
 	var rsaPubKey *rsa.PublicKey
 	switch cert.PublicKey.(type) {
 	case *rsa.PublicKey:
-		rsaPubKey = rsaPubKey
+		rsaPubKey = cert.PublicKey.(*rsa.PublicKey)
 	default:
 		return nil, util.MsgError("ParsePublicKey", "public key is not rsa.PublicKey")
 	}

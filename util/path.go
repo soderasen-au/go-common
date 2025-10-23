@@ -21,8 +21,11 @@ func Exists(path string) (bool, error) {
 
 func ListSubFolders(path string) ([]string, error) {
 	exists, err := Exists(path)
-	if err != nil || !exists {
+	if err != nil {
 		return nil, err
+	}
+	if !exists {
+		return nil, nil
 	}
 
 	subfolders := make([]string, 0)
@@ -41,8 +44,11 @@ func ListSubFolders(path string) ([]string, error) {
 // will return full path.
 func ListFiles(folder string) ([]string, *Result) {
 	exists, err := Exists(folder)
-	if err != nil || !exists {
+	if err != nil {
 		return nil, Error("Exists", err)
+	}
+	if !exists {
+		return nil, MsgError("Exists", "folder does not exist: "+folder)
 	}
 
 	files, err := os.ReadDir(folder)
