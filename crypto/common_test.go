@@ -1,7 +1,6 @@
 package crypto
 
 import (
-	"crypto/rsa"
 	"testing"
 )
 
@@ -22,7 +21,7 @@ func TestInternalKeysInitialization(t *testing.T) {
 		if InternalPrivateKey.D == nil {
 			t.Error("InternalPrivateKey.D (private exponent) is nil")
 		}
-		if InternalPrivateKey.PublicKey.N == nil {
+		if InternalPrivateKey.N == nil {
 			t.Error("InternalPrivateKey.PublicKey.N is nil")
 		}
 	})
@@ -77,7 +76,7 @@ func TestInternalKeysInitialization(t *testing.T) {
 			t.Skip("InternalPrivateKey is nil")
 		}
 		// Verify public key components match
-		if InternalPrivateKey.PublicKey.N.Cmp(InternalPrivateKey.N) != 0 {
+		if InternalPrivateKey.N.Cmp(InternalPrivateKey.N) != 0 {
 			t.Error("Public key modulus does not match private key modulus")
 		}
 	})
@@ -131,6 +130,6 @@ func TestInternalPrivateKeyValidation(t *testing.T) {
 		}
 
 		// Type assertion to ensure it's actually an RSA key
-		var _ *rsa.PrivateKey = InternalPrivateKey
+		var _ = InternalPrivateKey
 	})
 }

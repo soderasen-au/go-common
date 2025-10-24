@@ -1,11 +1,12 @@
 package saml
 
 import (
+	"context"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -90,11 +91,16 @@ func (meta *IdpMetaData) GetMetaData() (*types.EntityDescriptor, dsig.X509Certif
 		if meta.Url == nil {
 			return nil, nil, util.MsgError("GetUrlMetaData", "No URL")
 		}
-		response, err := http.Get(*meta.Url)
+		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, *meta.Url, nil)
+		if err != nil {
+			return nil, nil, util.Error("NewRequestWithContext", err)
+		}
+		response, err := http.DefaultClient.Do(req)
 		if err != nil {
 			return nil, nil, util.Error("GetHttpMetaData", err)
 		}
-		meta.RawData, err = ioutil.ReadAll(response.Body)
+		defer func() { _ = response.Body.Close() }()
+		meta.RawData, err = io.ReadAll(response.Body)
 		if err != nil {
 			return nil, nil, util.Error("ReadUrlMetaData", err)
 		}

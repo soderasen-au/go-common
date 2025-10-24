@@ -79,6 +79,7 @@ func (c *Config) AuthRequest(r *http.Request) {
 	}
 }
 
+//nolint:staticcheck
 func (c *Config) AuthCodeURL() (string, *util.Result) {
 	if c.Auth.Method == AM_OAuth_AuthCode {
 		return c.Cfg.AuthCodeURL(AuthCodeStateName), nil

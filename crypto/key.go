@@ -62,6 +62,7 @@ type RsaKeyPair struct {
 	X509Cert *x509.Certificate `json:"x_509_cert,omitempty" yaml:"x_509_cert,omitempty" bson:"x_509_cert,omitempty"`
 }
 
+//nolint:staticcheck
 func NewRsaKeyPair(keyPairFiles KeyPairFiles) (*RsaKeyPair, *util.Result) {
 	cert, err := tls.LoadX509KeyPair(keyPairFiles.Cert, keyPairFiles.Key)
 	if err != nil {

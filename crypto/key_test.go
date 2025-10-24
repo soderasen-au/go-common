@@ -49,8 +49,8 @@ func generateTestCertFiles(t *testing.T, dir string) (certFile, keyFile string) 
 	if err != nil {
 		t.Fatal(err)
 	}
-	pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: certDER})
-	certOut.Close()
+	_ = pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: certDER})
+	_ = certOut.Close()
 
 	// Write private key to file
 	keyFile = filepath.Join(dir, "test_key.pem")
@@ -58,8 +58,8 @@ func generateTestCertFiles(t *testing.T, dir string) (certFile, keyFile string) 
 	if err != nil {
 		t.Fatal(err)
 	}
-	pem.Encode(keyOut, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(privateKey)})
-	keyOut.Close()
+	_ = pem.Encode(keyOut, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(privateKey)})
+	_ = keyOut.Close()
 
 	return certFile, keyFile
 }
@@ -69,7 +69,7 @@ func TestKeyPairFiles_NewRsaKeyPair(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile := generateTestCertFiles(t, tmpDir)
 
@@ -135,7 +135,7 @@ func TestKeyPairFiles_NewTlsConfig(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile := generateTestCertFiles(t, tmpDir)
 
@@ -190,7 +190,7 @@ func TestNewRsaKeyPair(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile := generateTestCertFiles(t, tmpDir)
 
@@ -242,7 +242,7 @@ func TestRsaKeyPair_GetKeyPair(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile := generateTestCertFiles(t, tmpDir)
 	kpFiles := KeyPairFiles{Cert: certFile, Key: keyFile}
@@ -303,7 +303,7 @@ func TestRsaKeyPair_GetKeyPair(t *testing.T) {
 func TestKeyPair_NewRsaKeyPair(t *testing.T) {
 	// Generate a valid certificate for testing
 	tmpDir, _ := os.MkdirTemp("", "keypair-test-*")
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 	certFile, keyFile := generateTestCertFiles(t, tmpDir)
 
 	// Read the cert and key as strings
@@ -386,7 +386,7 @@ func TestKeyPair_NewRsaKeyPair(t *testing.T) {
 func TestKeyPair_NewTlsConfig(t *testing.T) {
 	// Generate a valid certificate for testing
 	tmpDir, _ := os.MkdirTemp("", "keypair-test-*")
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 	certFile, keyFile := generateTestCertFiles(t, tmpDir)
 
 	// Read the cert and key as strings

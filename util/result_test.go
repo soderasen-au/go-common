@@ -15,5 +15,4 @@ func TestResult_GetRootCause(t *testing.T) {
 
 	root := res.GetRootCause()
 	fmt.Println(JsonStr(&root))
-
 }

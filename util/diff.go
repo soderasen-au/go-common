@@ -100,7 +100,7 @@ func NewJsonDiff[T any](path string, from, to *T) (*Diff, *Result) {
 	toBuf = append(toBuf, '\n')
 	diffBuf := diff.Diff("left", fromBuf, "right", toBuf)
 
-	if diffBuf == nil || len(diffBuf) == 0 {
+	if len(diffBuf) == 0 {
 		return nil, nil
 	}
 

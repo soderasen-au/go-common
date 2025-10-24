@@ -171,7 +171,7 @@ func TestCipherFile_WriteToFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	tests := []struct {
 		name    string
@@ -226,7 +226,7 @@ func TestCipherFile_ReadFromFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	// Create a test encrypted file
 	testFile := filepath.Join(tmpDir, "test.enc")
@@ -283,7 +283,7 @@ func TestCipherFile_WriteReadRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	tests := []struct {
 		name string
@@ -332,7 +332,7 @@ func TestCipherFile_InvalidCipherData(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	// Create a file with invalid cipher data
 	invalidFile := filepath.Join(tmpDir, "invalid.enc")

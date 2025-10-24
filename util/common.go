@@ -101,7 +101,7 @@ func Ptr[T any](v T) *T {
 }
 
 func Int32to64(i *int32) *int64 {
-	var o int64 = int64(*i)
+	var o = int64(*i)
 	return &o
 }
 

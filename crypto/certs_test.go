@@ -44,8 +44,8 @@ func generateTestPEMFiles(t *testing.T, dir string) (certFile, keyFile, caFile s
 	// Write CA certificate
 	caFile = filepath.Join(dir, ROOT_CA_FILENAME)
 	caOut, _ := os.Create(caFile)
-	pem.Encode(caOut, &pem.Block{Type: "CERTIFICATE", Bytes: caCertDER})
-	caOut.Close()
+	_ = pem.Encode(caOut, &pem.Block{Type: "CERTIFICATE", Bytes: caCertDER})
+	_ = caOut.Close()
 
 	// Generate client key and cert
 	clientKey, err := rsa.GenerateKey(rand.Reader, 2048)
@@ -77,14 +77,14 @@ func generateTestPEMFiles(t *testing.T, dir string) (certFile, keyFile, caFile s
 	// Write client certificate
 	certFile = filepath.Join(dir, CLIENT_PEM_FILENAME)
 	certOut, _ := os.Create(certFile)
-	pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: clientCertDER})
-	certOut.Close()
+	_ = pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: clientCertDER})
+	_ = certOut.Close()
 
 	// Write client key
 	keyFile = filepath.Join(dir, CLIENT_KEY_FILENAME)
 	keyOut, _ := os.Create(keyFile)
-	pem.Encode(keyOut, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(clientKey)})
-	keyOut.Close()
+	_ = pem.Encode(keyOut, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(clientKey)})
+	_ = keyOut.Close()
 
 	return certFile, keyFile, caFile
 }
@@ -117,7 +117,7 @@ func TestCertificates_NewTlsConfig(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile, caFile := generateTestPEMFiles(t, tmpDir)
 
@@ -186,7 +186,7 @@ func TestCertificates_NewRsaKeyPair(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile, _ := generateTestPEMFiles(t, tmpDir)
 
@@ -241,7 +241,7 @@ func TestCerts_NewTlsConfig(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile, caFile := generateTestPEMFiles(t, tmpDir)
 
@@ -309,7 +309,7 @@ func TestCerts_NewRsaKeyPair(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile, _ := generateTestPEMFiles(t, tmpDir)
 
@@ -366,7 +366,7 @@ func TestCerts_Priority(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	certFile, keyFile, caFile := generateTestPEMFiles(t, tmpDir)
 
@@ -431,11 +431,11 @@ func TestPfx_EmptyPassword(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	// Create a dummy file (not a real PFX)
 	dummyFile := filepath.Join(tmpDir, "dummy.pfx")
-	os.WriteFile(dummyFile, []byte("not a real pfx"), 0644)
+	_ = os.WriteFile(dummyFile, []byte("not a real pfx"), 0644)
 
 	pfx := Pfx{
 		Cert:     dummyFile,

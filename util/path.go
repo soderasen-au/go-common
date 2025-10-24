@@ -118,15 +118,15 @@ func MoveFile(src, dst string) *Result {
 	if err != nil {
 		return Error("Open: "+src, err)
 	}
+	defer func() { _ = inputFile.Close() }()
+
 	outputFile, err := os.Create(dst)
 	if err != nil {
-		inputFile.Close()
 		return Error("Create: "+dst, err)
 	}
-	defer outputFile.Close()
+	defer func() { _ = outputFile.Close() }()
 
 	_, err = io.Copy(outputFile, inputFile)
-	inputFile.Close()
 	if err != nil {
 		return Error("Copy "+src+" to "+dst, err)
 	}

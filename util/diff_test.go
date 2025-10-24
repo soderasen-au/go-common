@@ -165,13 +165,13 @@ func TestNewDiff(t *testing.T) {
 
 			if diff != nil {
 				if tt.want == "nil" {
-					t.Errorf("want nil diff but got: `%s`", string(diff.Diff))
+					t.Errorf("want nil diff but got: `%s`", diff.Diff)
 					return
 				}
 				if diff.Type != tt.want {
 					t.Errorf("want type `%s` but got `%s`", tt.want, diff.Type)
 				} else {
-					fmt.Printf("diff: %s\n", string(diff.Diff))
+					fmt.Printf("diff: %s\n", diff.Diff)
 				}
 			} else {
 				if tt.want != "nil" {

@@ -73,7 +73,7 @@ func TestListSubFolders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	// Create subdirectories
 	os.Mkdir(filepath.Join(tmpDir, "folder1"), 0755)
@@ -138,7 +138,7 @@ func TestListFiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	// Create test files
 	file1 := filepath.Join(tmpDir, "file1.txt")
@@ -188,7 +188,7 @@ func TestFilterFiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = os.RemoveAll(tmpDir) }()
 
 	// Create test files
 	os.WriteFile(filepath.Join(tmpDir, "file1.txt"), []byte("test1"), 0644)

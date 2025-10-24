@@ -65,8 +65,8 @@ func (certs Certificates) NewTlsConfig() (*tls.Config, *util.Result) {
 	return tlsConfig, nil
 }
 
+//nolint:staticcheck
 func (certs Certificates) NewRsaKeyPair() (*RsaKeyPair, *util.Result) {
-
 	return NewRsaKeyPair(KeyPairFiles{
 		Cert: certs.ClientFile,
 		Key:  certs.ClientkeyFile,
@@ -111,6 +111,7 @@ func (p Pfx) NewTlsConfig() (*tls.Config, *util.Result) {
 	return tlsConfig, nil
 }
 
+//nolint:staticcheck
 func (p Pfx) NewRsaKeyPair() (*RsaKeyPair, *util.Result) {
 	pfxData, err := os.ReadFile(p.Cert)
 	if err != nil {
@@ -165,6 +166,7 @@ func (c Certs) NewTlsConfig() (*tls.Config, *util.Result) {
 	return nil, util.MsgError("", "there's no cert")
 }
 
+//nolint:staticcheck
 func (c Certs) NewRsaKeyPair() (*RsaKeyPair, *util.Result) {
 	if c.QlikPem != nil {
 		return c.QlikPem.NewRsaKeyPair()

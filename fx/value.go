@@ -52,11 +52,11 @@ func (v *Value) SetTrue() *Value {
 }
 
 func (v *Value) False() bool {
-	return v.Error == nil && util.MaybeNil(v.Text) == "false" && v.IsNumeric == true && util.MaybeNil(v.Number) == 0
+	return v.Error == nil && util.MaybeNil(v.Text) == "false" && v.IsNumeric && util.MaybeNil(v.Number) == 0
 }
 
 func (v *Value) True() bool {
-	return v.Error == nil && util.MaybeNil(v.Text) == "true" && v.IsNumeric == true && util.MaybeNil(v.Number) == 1.0
+	return v.Error == nil && util.MaybeNil(v.Text) == "true" && v.IsNumeric && util.MaybeNil(v.Number) == 1.0
 }
 
 func (v *Value) IsBool() bool {
