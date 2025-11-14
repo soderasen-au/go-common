@@ -23,7 +23,7 @@ func NewConfig() *Config {
 		EnableFileWriter:    true,
 		SimpleFileWriter:    false,
 		SimpleFileDelimiter: ",",
-		FileName:            "log.json",
+		FileName:            "log.jsonl",
 		MaxSizeMB:           100,
 		MaxAgeDays:          7,
 		MaxBackups:          7,
